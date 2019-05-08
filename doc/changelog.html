@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/static/css/common.css">
 </head>
 <body>
-
-<div class="layui-card">
+<div id="test"></div>
+<div class="layui-card" >
     <div class="layui-card-header">更新日志</div>
     <div class="layui-card-body">
         <ul class="layui-timeline">
@@ -49,7 +49,13 @@
 
 </body>
 <script src="/static/layui/layui.js"></script>
+<script src="/static/layui/jquery2.2.4.js"></script>
 <script>
+    // setInterval(function(){
+
+    //     console.log("定时器在执行");
+    //    $("#test").append("aaa<br/>");
+    //  }, 5000);
     layui.config({base: '/static/'}).extend({common: 'js/common'}).use(['common'], function() {
         var common = layui.common;
 

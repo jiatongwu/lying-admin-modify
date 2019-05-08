@@ -208,6 +208,7 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
          * 根据当前选项卡追踪侧栏菜单展开
          */
         function traceMenu() {
+            console.log(LAYID);
             var menu = SIDE.find('li.lau-nav-item a[lau-href="' + LAYID + '"]').first();
             if (menu[0] && !menu.next('.lau-nav-child')[0]) {
                 if (menu.hasClass('lau-nav-header')) {
@@ -479,8 +480,17 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
 
             //监听选项卡切换
             element.on('tab(' + tabFilter + ')', function(data) {
+                console.log("table 切换");
                 tabThis = $(this);
                 LAYID = tabThis.attr('lay-id');
+
+                $('*[lau-href]').each(function(i,item){
+                    console.log(item);
+                    $(item).removeClass("layui-this");
+                });
+                $('[lau-href="'+LAYID+'"]').each(function(i,item){
+                    $(item).addClass("layui-this");
+                });
                 tabThisWidth = tabThis.outerWidth();
                 tabThisLeft = tabThis.position().left;
                 THIS.resize();
@@ -488,6 +498,10 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
 
                 var show = data.elem.find('.layui-tab-item.layui-show').first();
                 IFRAME = show.find('iframe').first();
+                console.log("iframe");
+                console.log(IFRAME);
+                console.log("show");
+                console.log(show);
                 //延迟加载iframe减轻新建选项卡卡顿
                 IFRAME[0] || show.append('<iframe src="' + LAYID + '"></iframe>') && (IFRAME = show.find('iframe').first());
             });
@@ -532,8 +546,13 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
 
         //监听锚点打开选项卡
         $(document).on('click', '*[lau-href]', function () {
+            $('*[lau-href]').each(function(i,item){
+                console.log(item);
+                $(item).removeClass("layui-this");
+            });
             var _this = $(this),
                 href = _this.attr('lau-href');
+                _this.addClass("layui-this");
             if (_this.parents('.lau-nav-item')[0]) {
                 if (!_this.next('.lau-nav-child')[0]) {
                     THIS.go(href, _this.find('cite').text(), _this.find('i').prop('class'));
